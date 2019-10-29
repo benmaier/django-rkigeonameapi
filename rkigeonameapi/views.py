@@ -117,7 +117,8 @@ def geoname_exhaustive_search(request, searchstring):
                                       alternatenames__iscolloquial=0
                                      )
                                  ) \
-                          .order_by('-population','-fcode__searchorder_detail').distinct()
+                          .distinct() \
+                          .order_by('-fcode__searchorder_detail','-population')
         if len(fcodes) > 0:
             geonames = geonames.filter(fcode__code__in=fcodes)
 
@@ -145,7 +146,8 @@ def geoname_search(request, searchstring):
                                     Q(englishname__icontains=searchstring) | 
                                     Q(name__icontains=searchstring)
                                  ) \
-                          .order_by('-population','-fcode__searchorder_detail').distinct()
+                          .distinct() \
+                          .order_by('-fcode__searchorder_detail','-population')
         if len(fcodes) > 0:
             geonames = geonames.filter(fcode__code__in=fcodes)
 
