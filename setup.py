@@ -23,6 +23,7 @@ setup(
             'django>=2.2.0',
             'djangorestframework>=3.10.3',
             'mysqlclient>=1.4.4',
+            'humanfriendly>=4.18',
         ],
     classifiers=[
         'Environment :: Web Environment',
