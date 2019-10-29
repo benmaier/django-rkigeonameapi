@@ -88,9 +88,11 @@ user/database should have the following settings:
 .. code:: sql
 
    CREATE SCHEMA `your_db_name` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ;
-   CREATE USER 'your_db_user'@'localhost' IDENTIFIED BY 'REPLACETHISWITHTHERIGHTPASSWORD';
-   GRANT ALL PRIVILEGES ON your_db_name.* TO 'your_db_user'@'localhost';
-   GRANT SELECT ON geonames.* TO 'your_db_user'@'localhost';
+   CREATE USER 'your_db_user'@'your_host_name' IDENTIFIED BY 'REPLACETHISWITHTHERIGHTPASSWORD';
+   GRANT ALL PRIVILEGES ON your_db_name.* TO 'your_db_user'@'your_host_name';
+   GRANT SELECT ON geonames.* TO 'your_db_user'@'your_host_name';
+
+For development, you can just use the host ``localhost``.
 
 Given these settings, create a mysql-connection file
 ``your/path/to/db.cnf``
@@ -98,7 +100,7 @@ Given these settings, create a mysql-connection file
 .. code:: config
 
    [client]
-   host = localhost
+   host = your_host_name
    port = 3306
    user = your_db_user
    password = REPLACETHISWITHTHERIGHTPASSWORD

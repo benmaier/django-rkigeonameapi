@@ -18,6 +18,12 @@ setup(
     url='https://github.com/benmaier/django-rkigeonameapi',
     author='Benjamin F. Maier',
     author_email='bfmaier@physik.hu-berlin.de',
+
+    install_requires=[
+            'django>=2.2.0',
+            'djangorestframework>=3.10.3',
+            'mysqlclient>=1.4.4',
+        ],
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',

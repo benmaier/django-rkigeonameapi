@@ -20,6 +20,8 @@ a.out
 /tmp/
 /dist/
 
+/*.sql
+
 /jupyter_notebooks/.ipynb_checkpoints/
 
 /py_only_docs/
