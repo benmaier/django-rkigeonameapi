@@ -20,21 +20,21 @@ from .views import (
         )
 
 urlpatterns = [
-    path('featurecode/', FeaturecodeList.as_view()),
-    path('featurecode/<str:pk>', FeaturecodeDetail.as_view()),
-    path('country/', CountryinfoList.as_view()),
-    path('country/<str:pk>', CountryinfoDetail.as_view()),
-    path('continent/', ContinentList.as_view()),
-    path('continent/<str:pk>', ContinentDetail.as_view()),
-    path('geoname/', GeonameList.as_view()),
-    path('geoname/<int:pk>', GeonameDetail.as_view()),
-    path('geonamechildren/<int:pk>', GeonameChildrenUpdateDetail.as_view()),
-    path('region/', RegionList.as_view()),
-    path('region/<str:pk>', RegionDetail.as_view()),
-    path('regioncountries/<str:pk>', RegionCountriesUpdateDetail.as_view()),
-    path('geonamefcodechildren/<str:pk>', geoname_children_by_fcode),
-    path('geonamesearch/<str:searchstring>', geoname_search),
-    path('geonameexhaustivesearch/<str:searchstring>', geoname_exhaustive_search),
+    path('api/featurecode/', FeaturecodeList.as_view()),
+    path('api/featurecode/<str:pk>', FeaturecodeDetail.as_view()),
+    path('api/country/', CountryinfoList.as_view()),
+    path('api/country/<str:pk>', CountryinfoDetail.as_view()),
+    path('api/continent/', ContinentList.as_view()),
+    path('api/continent/<str:pk>', ContinentDetail.as_view()),
+    path('api/geoname/', GeonameList.as_view()),
+    path('api/geoname/<int:pk>', GeonameDetail.as_view()),
+    path('api/geonamechildren/<int:pk>', GeonameChildrenUpdateDetail.as_view()),
+    path('api/region/', RegionList.as_view()),
+    path('api/region/<str:pk>', RegionDetail.as_view()),
+    path('api/regioncountries/<str:pk>', RegionCountriesUpdateDetail.as_view()),
+    path('api/geonamefcodechildren/<str:pk>', geoname_children_by_fcode),
+    path('api/geonamesearch/<str:searchstring>', geoname_search),
+    path('api/geonameexhaustivesearch/<str:searchstring>', geoname_exhaustive_search),
 ]
 
 #urlpatterns = format_suffix_patterns(urlpatterns)
