@@ -124,41 +124,41 @@ A Geoname is a main geographical entity. It could be a populated place, a countr
 
 #### API endpoints
 
-Admin: http://localhost:8000/admin/rkigeonameapi/geoname/ 
+Admin: http://localhost:8000/admin/rkigeonameapi/api/geoname/ 
 
 REST:
 
 | Action | Link | Description |
 | ------ | ---- | ----------- |
-| list/create | http://localhost:8000/rkigeonameapi/geoname/ | Show a JSON list of all Geoname-objects and add an entry |
-| view/update | http://localhost:8000/rkigeonameapi/geoname/INTID | Show a single Geoname-object associated with the primary key as JSON |
-| search | http://localhost:8000/rkigeonameapi/geonamesearch/SEARCHSTRING | Show all Geoname-objects whose `name` and `englishname` contain the `SEARCHSTRING` |
-| exhaustive search | http://localhost:8000/rkigeonameapi/geonameexhaustivesearch/SEARCHSTRING | Show all Geoname-objects whose `alternatenames` or `englishname` start with the `SEARCHSTRING` |
-| search by feature code | http://localhost:8000/rkigeonameapi/geonamesearch/SEARCHSTRING?fcode=ADM1,PCLI | As above, but only show geonames whose feature code is in the list of feature codes provided in the URL |
-| exhaustive search by feature code| http://localhost:8000/rkigeonameapi/geonameexhaustivesearch/SEARCHSTRING?fcode=ADM1,PCLI | See definitions above |
+| list/create | http://localhost:8000/rkigeonameapi/api/geoname/ | Show a JSON list of all Geoname-objects and add an entry |
+| view/update | http://localhost:8000/rkigeonameapi/api/geoname/INTID | Show a single Geoname-object associated with the primary key as JSON |
+| search | http://localhost:8000/rkigeonameapi/api/geonamesearch/SEARCHSTRING | Show all Geoname-objects whose `name` and `englishname` contain the `SEARCHSTRING` |
+| exhaustive search | http://localhost:8000/rkigeonameapi/api/geonameexhaustivesearch/SEARCHSTRING | Show all Geoname-objects whose `alternatenames` or `englishname` start with the `SEARCHSTRING` |
+| search by feature code | http://localhost:8000/rkigeonameapi/api/geonamesearch/SEARCHSTRING?fcode=ADM1,PCLI | As above, but only show geonames whose feature code is in the list of feature codes provided in the URL |
+| exhaustive search by feature code| http://localhost:8000/rkigeonameapi/api/geonameexhaustivesearch/SEARCHSTRING?fcode=ADM1,PCLI | See definitions above |
 
 A Geoname can always contain multiple children (think of a US state containing cities). Here's how you control those hierarchical relationships
 
-Admin: http://localhost:8000/admin/rkigeonameapi/hierarchy/
+Admin: http://localhost:8000/admin/rkigeonameapi/api/hierarchy/
 
 REST:
 
 | Action | Link | Description |
 | ------ | ---- | ----------- |
-| update | http://localhost:8000/rkigeonameapi/geonamechildren/INTID | Show (`GET`) and update (`PATCH`) the children of a single Geoname-object |
-| view specific | http://localhost:8000/rkigeonameapi/geonamefcodechildren/INTID?fcode=ADM1,ADM2 | Show all children of a single Geoname-object that are associated with any of the specified feature codes |
+| update | http://localhost:8000/rkigeonameapi/api/geonamechildren/INTID | Show (`GET`) and update (`PATCH`) the children of a single Geoname-object |
+| view specific | http://localhost:8000/rkigeonameapi/api/geonamefcodechildren/INTID?fcode=ADM1,ADM2 | Show all children of a single Geoname-object that are associated with any of the specified feature codes |
 
 
 ### Feature codes
 
 Each Geoname is associated with a feature code. Here are the most relevant ones with explanations
 
-Admin: http://localhost:8000/admin/rkigeonameapi/featurecode
+Admin: http://localhost:8000/admin/rkigeonameapi/api/featurecode
 
 REST: 
 
-* list/create: http://localhost:8000/rkigeonameapi/featurecode
-* view/update: http://localhost:8000/rkigeonameapi/featurecode/STRINGID
+* list/create: http://localhost:8000/rkigeonameapi/api/featurecode
+* view/update: http://localhost:8000/rkigeonameapi/api/featurecode/STRINGID
 
 #### Continents and regions
 
@@ -209,36 +209,36 @@ These are hierarchically decreasing administrative divisions of a country
 
 Custom regions are shortcuts for improved handling/grouping of countries.
 
-Admin: http://localhost:8000/admin/rkigeonameapi/region/
+Admin: http://localhost:8000/admin/rkigeonameapi/api/region/
 
 REST:
 
-* list/create: http://localhost:8000/rkigeonameapi/region/
-* view/update: http://localhost:8000/rkigeonameapi/region/STRINGID
+* list/create: http://localhost:8000/rkigeonameapi/api/region/
+* view/update: http://localhost:8000/rkigeonameapi/api/region/STRINGID
 
 You may want to alter a region's children countries by using
 
-* http://localhost:8000/rkigeonameapi/regioncountries/STRINGID
+* http://localhost:8000/rkigeonameapi/api/regioncountries/STRINGID
 
 ### Countries
 
 The database holds specific info about countries.
 
-Admin: http://localhost:8000/admin/rkigeonameapi/country/
+Admin: http://localhost:8000/admin/rkigeonameapi/api/country/
 
 REST:
 
-* list/create: http://localhost:8000/rkigeonameapi/country/
-* view/update: http://localhost:8000/rkigeonameapi/country/STRINGID
+* list/create: http://localhost:8000/rkigeonameapi/api/country/
+* view/update: http://localhost:8000/rkigeonameapi/api/country/STRINGID
 
 ### Continents
 
 The database holds specific info about continents.
 
-Admin: http://localhost:8000/admin/rkigeonameapi/continent/
+Admin: http://localhost:8000/admin/rkigeonameapi/api/continent/
 
 REST:
 
-* list/create: http://localhost:8000/rkigeonameapi/continent/
-* view/update: http://localhost:8000/rkigeonameapi/continent/STRINGID
+* list/create: http://localhost:8000/rkigeonameapi/api/continent/
+* view/update: http://localhost:8000/rkigeonameapi/api/continent/STRINGID
 
