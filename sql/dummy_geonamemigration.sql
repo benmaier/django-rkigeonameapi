@@ -421,13 +421,13 @@ INSERT INTO your_db_name.region(
     , englishname
     , fcode
     , geonameid
+)
 SELECT
       pkey
     , name
     , englishname
     , fcode
     , geonameid
-)
 FROM 
 ( SELECT
       concat(replace(lower(c.iso_alpha2)," ","-"),"-",c.geonameid) as pkey
