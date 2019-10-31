@@ -403,3 +403,55 @@ WHERE
     g.name IS NULL
 ON DUPLICATE KEY UPDATE name = VALUES(name)
     ;
+
+-- ADD EVERY COUNTRY AS A REGION FOR ITS OWN AND ADD "GLOBAL" AS A REGION
+
+INSERT INTO your_db_name.region(
+      region_id
+    , name
+    , englishname
+)
+VALUES (
+    'global', 'Weltweit', 'Global'
+);
+
+INSERT INTO your_db_name.region(
+      region_id
+    , name
+    , englishname
+    , fcode
+    , geonameid
+SELECT
+      pkey
+    , name
+    , englishname
+    , fcode
+    , geonameid
+)
+FROM 
+( SELECT
+      concat(replace(lower(c.iso_alpha2)," ","-"),"-",c.geonameid) as pkey
+    , c.name as name
+    , c.englishname as englishname
+    , g.fcode as fcode
+    , g.geonameid as geonameid
+ FROM 
+    your_db_name.countryinfo as c
+ LEFT JOIN
+    your_db_name.geoname as g
+ ON
+    g.geonameid = c.geonameid
+) as country;
+
+INSERT INTO your_db_name.region_laender(region_id, countryinfo_id)
+SELECT 'global', iso_alpha2 FROM your_db_name.countryinfo;
+
+INSERT INTO your_db_name.region_laender(region_id, countryinfo_id)
+SELECT 
+     concat(replace(lower(iso_alpha2)," ","-"),"-",geonameid)
+   , iso_alpha2
+FROM
+    your_db_name.countryinfo
+;
+
+
