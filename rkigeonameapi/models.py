@@ -11,7 +11,7 @@ def _size(val):
     return s
 
 class Featurecode(models.Model):
-    code = models.CharField(max_length=7,primary_key=True,verbose="Featurecode")
+    code = models.CharField(max_length=7,primary_key=True,verbose_name="Featurecode")
     name = models.CharField(max_length=191, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     searchorder_detail = models.FloatField(blank=True, null=True)
