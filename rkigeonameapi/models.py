@@ -20,7 +20,7 @@ class Featurecode(models.Model):
         db_table = 'featureCodes'
         verbose_name = 'Featurecode'
         verbose_name_plural = 'Featurecodes'
-        ordering = ["code"]
+        ordering = ["-searchorder_detail","code"]
 
     def __str__(self):
         return "{}: {}".format(self.code, self.name)
