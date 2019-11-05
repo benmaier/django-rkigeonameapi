@@ -11,7 +11,7 @@ def _size(val):
     return s
 
 class Featurecode(models.Model):
-    code = models.CharField(max_length=7,primary_key=True)
+    code = models.CharField(max_length=7,primary_key=True,verbose="Featurecode")
     name = models.CharField(max_length=191, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     searchorder_detail = models.FloatField(blank=True, null=True)
@@ -20,6 +20,7 @@ class Featurecode(models.Model):
         db_table = 'featureCodes'
         verbose_name = 'Featurecode'
         verbose_name_plural = 'Featurecodes'
+        ordering = ["code"]
 
     def __str__(self):
         return "{}: {}".format(self.code, self.name)
@@ -35,6 +36,7 @@ class Continent(models.Model):
         db_table = 'continentCodes'
         verbose_name = 'Kontinent'
         verbose_name_plural = 'Kontinente'
+        ordering = ["name"]
 
     def __str__(self):
         return "{} ({})".format(self.name, self.code)
@@ -65,6 +67,7 @@ class Countryinfo(models.Model):
         db_table = 'countryinfo'
         verbose_name = 'Land'
         verbose_name_plural = 'Länder'
+        ordering = [ 'name' ]
 
     def __str__(self):
         return "{} ({})".format(self.name, self.iso_alpha2)
@@ -97,6 +100,7 @@ class Geoname(models.Model):
         db_table = 'geoname'
         verbose_name = 'Geoname'
         verbose_name_plural = 'Geonames'
+        ordering = [ '-population','name' ]
 
     def __str__(self):
         if self.country is not None and not self.fcode.code.startswith('PCLI'):
@@ -112,13 +116,14 @@ class Hierarchy(models.Model):
     hierarchy_id = models.AutoField(primary_key=True)
     parent = models.ForeignKey(Geoname,models.CASCADE,related_name='parent_to',db_column='parentId')
     child = models.ForeignKey(Geoname,models.CASCADE,related_name='child_to',db_column='childId')
-    is_custom_entry = models.BooleanField(blank=True,null=True,default=True,editable=False)
+    is_custom_entry = models.BooleanField(blank=True,null=True,default=True,editable=False,verbose_name="Is custom entry?")
 
     class Meta:
         db_table = 'hierarchy'
         verbose_name = 'Hierarchie'
         verbose_name_plural = 'Hierarchien'
         unique_together = [ 'parent', 'child' ]
+        ordering = ['parent__geonameid']
 
     def __str__(self):
         return "{} -> {}".format(self.parent.name, self.child.name)
@@ -138,23 +143,25 @@ class Alternatename(models.Model):
         db_table = 'alternatename'
         verbose_name = 'Alternativname'
         verbose_name_plural = 'Alternativnamen'
+        ordering = [ 'alternatenameid' ]
 
     def __str__(self):
         return self.alternatename + " (" + self.geonameid.name + ")"
 
 class Region(models.Model):
-    region_id = models.CharField(primary_key=True, max_length=255)
+    region_id = models.CharField(primary_key=True, max_length=255,verbose_name='Region-ID')
     name = models.CharField(max_length=200)
     englishname = models.CharField(max_length=200,blank=True,null=True)
-    geonameid = models.ForeignKey(Geoname,models.CASCADE,blank=True,null=True,db_column='geonameid')
-    fcode = models.ForeignKey(Featurecode,models.CASCADE,blank=True,null=True,db_column='fcode')
+    geonameid = models.ForeignKey(Geoname,models.CASCADE,blank=True,null=True,db_column='geonameid',verbose_name="Geoname-Objekt")
+    fcode = models.ForeignKey(Featurecode,models.CASCADE,blank=True,null=True,db_column='fcode',verbose_name="Featurecode")
 
-    laender = models.ManyToManyField(Countryinfo)
+    laender = models.ManyToManyField(Countryinfo,verbose_name="Beinhaltete Länder")
 
     class Meta:
         db_table = 'region'
         verbose_name = "Region"
         verbose_name_plural = "Regionen"
+        ordering = [ '-geonameid__population', 'name' ]
 
     def __str__(self):
         if self.fcode is not None:
