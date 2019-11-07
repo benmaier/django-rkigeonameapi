@@ -60,12 +60,14 @@ FROM
 
 
 INSERT IGNORE INTO your_db_name.featureCodes(code, name, description) SELECT code, name, description FROM geonames.featureCodes;
+INSERT IGNORE INTO your_db_name.featureCodes(code, name, description) VALUES ('GL', 'Global', 'contains every place on earth.');
 
 -- remove the unnecessary class code in the table
 UPDATE your_db_name.featureCodes SET code = SUBSTR(code,3) WHERE SUBSTR(code,2,1) = '.';
 
 START TRANSACTION;
 USE `your_db_name`;
+UPDATE featureCodes SET searchorder_detail = 21  WHERE code = 'GL';
 UPDATE featureCodes SET searchorder_detail = 20  WHERE code = 'CONT' ;
 UPDATE featureCodes SET searchorder_detail = 19  WHERE code = 'RGN' ;
 UPDATE featureCodes SET searchorder_detail = 18  WHERE code = 'PCLI';
@@ -409,10 +411,11 @@ ON DUPLICATE KEY UPDATE name = VALUES(name)
 INSERT INTO your_db_name.region(
       region_id
     , name
+    , fcode
     , englishname
 )
 VALUES (
-    'global', 'Weltweit', 'Global'
+    'global', 'Weltweit', 'GL', 'Global'
 );
 
 INSERT INTO your_db_name.region(
