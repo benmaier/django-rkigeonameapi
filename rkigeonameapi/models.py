@@ -149,7 +149,8 @@ class Alternatename(models.Model):
         return self.alternatename + " (" + self.geonameid.name + ")"
 
 class Region(models.Model):
-    region_id = models.CharField(primary_key=True, max_length=255,verbose_name='Region-ID')
+    id = models.AutoField(primary_key=True)
+    region_id = models.CharField(max_length=255,verbose_name='Region-ID',unique=True)
     name = models.CharField(max_length=200)
     englishname = models.CharField(max_length=200,blank=True,null=True)
     geonameid = models.ForeignKey(Geoname,models.CASCADE,blank=True,null=True,db_column='geonameid',verbose_name="Geoname-Objekt")

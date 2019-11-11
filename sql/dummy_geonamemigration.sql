@@ -211,7 +211,13 @@ INSERT INTO your_db_name.alternatename(alternatenameId) VALUES (11092987) ON DUP
 
 -- DEFINE REGIONS
 
-INSERT INTO region
+INSERT INTO region(
+      region_id
+    , name
+    , englishname
+    , fcode
+    , geonameid
+)
 SELECT DISTINCT
 	  pkey
     , IF(alt2.alternateName IS NOT NULL, alt2.alternateName, pname) AS aname
@@ -259,12 +265,12 @@ ON pgid = alt2.geonameid
 
 -- POPULATE REGION MANY TO MANY
 
-INSERT INTO region_laender(region_id, countryinfo_id)
+INSERT INTO your_db_name.region_laender(region_id, countryinfo_id)
 SELECT DISTINCT pkey, ccountry FROM
 (	SELECT
 			  parent.geonameid as pgid
 			, parent.name as pname
-            , concat(replace(lower(parent.name)," ","-"),"-",parent.geonameid) as pkey
+            , reg.id as pkey
             , parent.fcode as pfcode
             , child.geonameid as cgid
             , child.name as cname
@@ -278,6 +284,9 @@ SELECT DISTINCT pkey, ccountry FROM
 	JOIN
 			geonames.geoname AS child
 	    ON child.geonameid = geonames.hierarchy.childid
+    JOIN
+            your_db_name.region as reg
+        ON concat(replace(lower(parent.name) COLLATE utf8mb4_unicode_ci," ","-"),"-",parent.geonameid) = reg.region_id
 	WHERE
 			child.fcode IN ('RGN','PCLI','TERR','PCLD','PCLX')
         AND parent.fcode IN ('CONT', 'RGN')
@@ -447,14 +456,18 @@ FROM
 ) as country;
 
 INSERT INTO your_db_name.region_laender(region_id, countryinfo_id)
-SELECT 'global', iso_alpha2 FROM your_db_name.countryinfo;
+SELECT (SELECT id FROM your_db_name.region where region_id='global' LIMIT 1), iso_alpha2 FROM your_db_name.countryinfo ;
 
 INSERT INTO your_db_name.region_laender(region_id, countryinfo_id)
 SELECT 
-     concat(replace(lower(iso_alpha2)," ","-"),"-",geonameid)
+     reg.id
    , iso_alpha2
-FROM
-    your_db_name.countryinfo
+  FROM
+     your_db_name.countryinfo as country
+  JOIN
+     your_db_name.region as reg
+  ON
+     concat(replace(lower(country.iso_alpha2) COLLATE utf8mb4_unicode_ci," ","-"),"-",country.geonameid) = reg.region_id
 ;
 
 
