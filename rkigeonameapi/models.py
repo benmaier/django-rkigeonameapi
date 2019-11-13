@@ -165,8 +165,8 @@ class Region(models.Model):
         ordering = [ '-geonameid__population', 'name' ]
 
     def __str__(self):
-        if self.fcode is not None:
-            fcode = " ({})".format(self.fcode.code)
+        if self.fcode is not None and self.fcode.code == 'RGN':
+            fcode = "RGN: "
         else:
             fcode = ""
-        return "{}{}".format(self.name, fcode)
+        return "{}{}".format(fcode, self.name)
