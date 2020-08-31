@@ -9,7 +9,7 @@ class HierarchyInline(admin.StackedInline):
 @admin.register(Region)
 class RegionAdmin(admin.ModelAdmin):
     autocomplete_fields = ['laender', 'geonameid']
-    search_fields = ['name','laender__name']
+    search_fields = ['name','laender__name','englishname','laender__englishname']
 
 @admin.register(Continent)
 class ContinentAdmin(admin.ModelAdmin):
